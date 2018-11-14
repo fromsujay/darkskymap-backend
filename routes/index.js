@@ -86,7 +86,7 @@ approuvedBySuperuser: Boolean,
 transparency: String,
 lightPollution: String,
 seeing: String,
-skyQualityMeter: String,
+skyQualityMeter: Number,
 easeOfAccessibilityByCar: Boolean,
 parkingAvailability: Boolean,
 powerSupplyAvailability: Boolean,
@@ -116,8 +116,8 @@ router.post('/addlocation', function(req, res, next) {
     skyQualityMeter: req.body.skyQualityMeter,
     easeOfAccessibilityByCar: req.body.accesFacileenVoiture,
     easeOfAccessibilityByCar: req.body.easeOfAccessibilityByCar,
-    accesInternet: req.body.accesInternet,
-    informationsComplementaires: req.body.informationsComplementaires
+    powerSupplyAvailability: req.body.powerSupplyAvailability,
+    additionalInformation: req.body.additionalInformation
   });
 
   newLocation.save(
