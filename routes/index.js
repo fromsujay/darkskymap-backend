@@ -94,11 +94,12 @@ additionalInformation: String
 });
 
 // Locations model
-var LocationsModel = mongoose.model('locations', locationsSchema);
+var LocationModel = mongoose.model('locations', locationsSchema);
 
 //-----Add locations-----//
 router.post('/addlocation', function(req, res, next) {
-  var newULocation = new LocationModel ({
+  console.log('body', req.body);
+  var newLocation = new LocationModel ({
 
     observationDate: req.body.observationDate,
     latitude: req.body.latitude,
@@ -112,17 +113,17 @@ router.post('/addlocation', function(req, res, next) {
     approuvedBySuperuser: req.body.approuvedBySuperuser,
     transparency: req.body.transparency,
     lightPollution: req.body.lightPollution,
-    seeing: req.body.seeeing,
+    seeing: req.body.seeing,
     skyQualityMeter: req.body.skyQualityMeter,
-    easeOfAccessibilityByCar: req.body.accesFacileenVoiture,
     easeOfAccessibilityByCar: req.body.easeOfAccessibilityByCar,
+    parkingAvailability: req.body.parkingAvailability,
     powerSupplyAvailability: req.body.powerSupplyAvailability,
     additionalInformation: req.body.additionalInformation
   });
 
   newLocation.save(
-    function (error, user) {
-      console.log(user);
+    function (error, location) {
+      console.log(location);
     }
 );
 
