@@ -9,13 +9,27 @@ mongoose.connect('mongodb://admin:paris02@ds163103.mlab.com:63103/darkskymap',
     }
 );
 
+//------------------------------User-----------------------------------//
+
+
+// User schema
+
+var userSchema = mongoose.Schema({
+    userName: String,
+    email: String,
+    password: String,
+    superUser: Boolean,
+    favorite: Array
+});
+
+// User model
+var UserModel = mongoose.model('users', userSchema);
+
+//------------------------------PAGE HOME-----------------------------------//
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Dark Sky Map Backend' });
 });
-
-
-//------------------------------PAGE HOME-----------------------------------//
 
 //-----Redirige vers la page Sign in-----//
 router.get('/', function(req, res, next) {
@@ -23,8 +37,22 @@ router.get('/', function(req, res, next) {
 });
 
 //-----Redirige vers la page Sign up-----//
-router.get('/', function(req, res, next) {
-  res.render('signup');
+router.post('/signup', function(req, res, next) {
+console.log('body', req.body);
+  var newUser = new UserModel ({
+    userName: req.body.userName,
+    email: req.body.email,
+    password: req.body.password,
+  });
+
+  newUser.save(
+    function (error, user) {
+      console.log(user);
+        res.render('map');
+    }
+);
+
+
 });
 
 //-----Redirige vers la page Carte-----//
