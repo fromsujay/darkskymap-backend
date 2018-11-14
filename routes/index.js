@@ -11,7 +11,7 @@ mongoose.connect('mongodb://admin:paris02@ds163103.mlab.com:63103/darkskymap',
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Dark Sky Map Backend' });
 });
 
 
