@@ -43,6 +43,7 @@ console.log('body', req.body);
     userName: req.body.userName,
     email: req.body.email,
     password: req.body.password,
+    superUser: false
   });
 
   newUser.save(
@@ -56,52 +57,10 @@ console.log('body', req.body);
 });
 
 //-----Redirige vers la page Carte-----//
-router.get('/', function(req, res, next) {
+router.get('/map', function(req, res, next) {
+
+
   res.render('Map');
 });
-
-
-//------------------------------PAGE CARTE-----------------------------------//
-
-//-----Redirige vers la page Home en cliquant sur Dark Sky Map-----//
-router.get('/carte', function(req, res, next) {
-  res.render('index');
-});
-
-//-----Redirige vers la page Home en cliquant sur bouton Home-----//
-router.get('/carte', function(req, res, next) {
-  res.render('index');
-});
-
-//-----Redirige vers la page Favoris-----//
-router.get('/carte', function(req, res, next) {
-  res.render('Favoris');
-});
-
-
-//------------------------------PAGE DESCRIPTION-----------------------------//
-
-//-----Redirige vers la page Details-----//
-router.get('/carte', function(req, res, next) {
-  res.render('Details');
-});
-
-//-----Redirige vers la page Carte-----//
-router.get('/carte', function(req, res, next) {
-  res.render('Carte');
-});
-
-//-----Renvoie des informations sur la page Favoris-----//
-router.get('/carte', function(req, res, next) {
-  res.render('Details');
-});
-
-//------------------------------PAGE DETAILS---------------------------------//
-
-//------------------------------PAGE SIGN IN---------------------------------//
-
-//------------------------------PAGE SIGN UP---------------------------------//
-
-//------------------------------PAGE FAVORIS---------------------------------//
 
 module.exports = router;
