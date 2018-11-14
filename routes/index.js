@@ -86,7 +86,7 @@ approuvedBySuperuser: Boolean,
 transparency: String,
 lightPollution: String,
 seeing: String,
-skyQualityMeter: String,
+skyQualityMeter: Number,
 easeOfAccessibilityByCar: Boolean,
 parkingAvailability: Boolean,
 powerSupplyAvailability: Boolean,
@@ -132,6 +132,14 @@ newLocations.save(
 
 });
 
+router.get('/map', function(req, res, next) {
 
+  LocationsModel.find(
+    function (err, locations) {
+      res.json(locations);
+    }
+)
+
+});
 
 module.exports = router;
