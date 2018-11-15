@@ -86,7 +86,13 @@ router.post('/signup', function(req, res, next) {
 
   newUser.save(
     function(error, user) {
-      console.log(user);
+
+      UserModel.find(
+        function(err, users) {
+          res.json(users);
+        }
+      )
+
       res.render('map');
     }
   );
