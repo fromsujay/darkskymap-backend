@@ -93,8 +93,6 @@ router.post('/signup', function(req, res, next) {
 
 });
 
-//------------------------------LOCATIONS-----------------------------------------//
-
 //-----Add new location-----//
 router.post('/addlocation', function(req, res, next) {
 
@@ -128,6 +126,8 @@ router.post('/addlocation', function(req, res, next) {
   );
 
 });
+
+//-----Get all location-----//
 
 router.get('/map', function(req, res, next) {
 
