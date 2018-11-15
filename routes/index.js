@@ -1,56 +1,83 @@
 var express = require('express');
 var router = express.Router();
-var mongoose= require('mongoose');
-var options = { server: { socketOptions: {connectTimeoutMS: 5000 } }};
-mongoose.connect('mongodb://admin:paris02@ds163103.mlab.com:63103/darkskymap',
-    options,
-    function(err) {
-     console.log(err);
+var mongoose = require('mongoose');
+var options = {
+  server: {
+    socketOptions: {
+      connectTimeoutMS: 5000
     }
+  }
+};
+mongoose.connect('mongodb://admin:paris02@ds163103.mlab.com:63103/darkskymap',
+  options,
+  function(err) {
+    console.log(err);
+  }
 );
 
-//------------------------------User-----------------------------------//
-
+//------------------------------Mongoose schemas & models-----------------------------------//
 
 // User schema
 
 var userSchema = mongoose.Schema({
-    userName: String,
-    email: String,
-    password: String,
-    superUser: Boolean,
-    favorite: Array
+  userName: String,
+  email: String,
+  password: String,
+  superUser: Boolean,
+  favorite: Array
 });
 
 // User model
+
 var UserModel = mongoose.model('users', userSchema);
 
-//------------------------------PAGE HOME-----------------------------------//
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Dark Sky Map Backend' });
+// Locations schema
+
+var locationsSchema = mongoose.Schema({
+  observationDate: String,
+  latitude: Number,
+  longtitude: Number,
+  isSouthernHorizonClear: String,
+  bortleScale: String,
+  explanationOfBortleScale: String,
+  observationCategory: String,
+  urbanCompromise: Boolean,
+  existenceOfDetails: String,
+  approuvedBySuperuser: Boolean,
+  transparency: String,
+  lightPollution: String,
+  seeing: String,
+  skyQualityMeter: Number,
+  easeOfAccessibilityByCar: Boolean,
+  parkingAvailability: Boolean,
+  powerSupplyAvailability: Boolean,
+  additionalInformation: String
 });
 
-//-----Cherche utilisateur existant-----//
+// Locations model
+var LocationsModel = mongoose.model('locations', locationsSchema);
+
+//------------------------------Routes-----------------------------------//
+
+//-----Finds existing user-----//
 router.post('/signin', function(req, res, next) {
 
   UserModel.find({
       email: req.body.email,
       password: req.body.password,
-      },
+    },
 
-    function (err, users) {
-        console.log(users);
-        res.json(users);
+    function(err, users) {
+      res.json(users);
     }
-)
+  )
 
 });
 
-//-----Save new user-----//
+//-----Add new user-----//
 router.post('/signup', function(req, res, next) {
-console.log('body', req.body);
-  var newUser = new UserModel ({
+
+  var newUser = new UserModel({
     userName: req.body.userName,
     email: req.body.email,
     password: req.body.password,
@@ -58,49 +85,20 @@ console.log('body', req.body);
   });
 
   newUser.save(
-    function (error, user) {
+    function(error, user) {
       console.log(user);
-        res.render('map');
+      res.render('map');
     }
-);
-
+  );
 
 });
-
 
 //------------------------------LOCATIONS-----------------------------------------//
 
-// Locations schema
-
-var locationsSchema = mongoose.Schema({
-observationDate: String,
-latitude: Number,
-longtitude: Number,
-isSouthernHorizonClear: String,
-bortleScale: String,
-explanationOfBortleScale: String,
-observationCategory: String,
-urbanCompromise: Boolean,
-existenceOfDetails: String,
-approuvedBySuperuser: Boolean,
-transparency: String,
-lightPollution: String,
-seeing: String,
-skyQualityMeter: Number,
-easeOfAccessibilityByCar: Boolean,
-parkingAvailability: Boolean,
-powerSupplyAvailability: Boolean,
-additionalInformation: String
-});
-
-// Locations model
-var LocationsModel = mongoose.model('locations', locationsSchema);
-
-//-----Add locations-----//
+//-----Add new location-----//
 router.post('/addlocation', function(req, res, next) {
-  console.log('addlocation route activée');
-  console.log('body: ', req.body);
-  var newLocations = new LocationsModel ({
+
+  var newLocation = new LocationModel({
     observationDate: req.body.observationDate,
     latitude: req.body.latitude,
     longtitude: req.body.longtitude,
@@ -121,24 +119,23 @@ router.post('/addlocation', function(req, res, next) {
     additionalInformation: req.body.additionalInformation,
   });
 
-console.log('newLocation :', newLocations);
+  console.log('newLocation :', newLocation);
 
-newLocations.save(
-  function (error, locations) {
-    console.log(error);
-      res.json('locations');
-  }
-);
+  newLocation.save(
+    function(error, location) {
+      res.json('location');
+    }
+  );
 
 });
 
 router.get('/map', function(req, res, next) {
 
   LocationsModel.find(
-    function (err, locations) {
+    function(err, locations) {
       res.json(locations);
     }
-)
+  )
 
 });
 
