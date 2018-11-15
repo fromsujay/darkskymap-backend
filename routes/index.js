@@ -17,7 +17,7 @@ mongoose.connect('mongodb://admin:paris02@ds163103.mlab.com:63103/darkskymap',
 
 //------------------------------Mongoose schemas & models-----------------------------------//
 
-// User schema
+//-----User  schema-----//
 
 var userSchema = mongoose.Schema({
   userName: String,
@@ -27,11 +27,11 @@ var userSchema = mongoose.Schema({
   favorite: Array
 });
 
-// User model
+//-----User model-----//
 
 var UserModel = mongoose.model('users', userSchema);
 
-// Locations schema
+//-----Location schema-----//
 
 var locationsSchema = mongoose.Schema({
   observationDate: String,
@@ -54,7 +54,7 @@ var locationsSchema = mongoose.Schema({
   additionalInformation: String
 });
 
-// Locations model
+//-----Location model-----//
 var LocationsModel = mongoose.model('locations', locationsSchema);
 
 //------------------------------Routes-----------------------------------//
