@@ -42,7 +42,7 @@ var locationsSchema = mongoose.Schema({
   explanationOfBortleScale: String,
   observationCategory: String,
   urbanCompromise: Boolean,
-  existenceOfDetails: String,
+  existenceOfDetails: Boolean,
   approuvedBySuperuser: Boolean,
   transparency: String,
   lightPollution: String,
