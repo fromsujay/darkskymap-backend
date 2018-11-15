@@ -34,9 +34,11 @@ var UserModel = mongoose.model('users', userSchema);
 //-----Location schema-----//
 
 var locationsSchema = mongoose.Schema({
+  locationName: String,
+  locationCategory: String,
   observationDate: String,
   latitude: Number,
-  longtitude: Number,
+  longitude: Number,
   isSouthernHorizonClear: String,
   bortleScale: String,
   explanationOfBortleScale: String,
@@ -93,7 +95,7 @@ router.post('/signup', function(req, res, next) {
         }
       )
 
-      res.render('map');
+
     }
   );
 
@@ -102,10 +104,12 @@ router.post('/signup', function(req, res, next) {
 //-----Add new location-----//
 router.post('/addlocation', function(req, res, next) {
 
-  var newLocation = new LocationModel({
+  var newLocations = new LocationsModel({
+    locationName: req.body.locationName,
+    locationCategory: req.body.locationCategory,
     observationDate: req.body.observationDate,
     latitude: req.body.latitude,
-    longtitude: req.body.longtitude,
+    longitude: req.body.longitude,
     isSouthernHorizonClear: req.body.isSouthernHorizonClear,
     bortleScale: req.body.bortleScale,
     explanationOfBortleScale: req.body.explanationOfBortleScale,
@@ -123,10 +127,11 @@ router.post('/addlocation', function(req, res, next) {
     additionalInformation: req.body.additionalInformation,
   });
 
-  console.log('newLocation :', newLocation);
+  console.log('newLocations :', newLocations);
 
-  newLocation.save(
+  newLocations.save(
     function(error, location) {
+      console.log(error);
       res.json('location');
     }
   );
@@ -139,7 +144,9 @@ router.get('/map', function(req, res, next) {
 
   LocationsModel.find(
     function(err, locations) {
-      res.json(locations);
+      res.json({locations});
+      console.log(locations);
+      console.log(err);
     }
   )
 
