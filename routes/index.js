@@ -89,13 +89,13 @@ router.post('/signup', function(req, res, next) {
   newUser.save(
     function(error, user) {
 
-    UserModel.find(
+    UserModel.findOne(
       {
         email: req.body.email,
         password: req.body.password
       },
-        function(err, users) {
-          res.json(users);
+        function(err, user) {
+          res.json(user);
         }
       )
     }
