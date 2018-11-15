@@ -86,19 +86,24 @@ router.post('/signup', function(req, res, next) {
     superUser: false
   });
 
+//------ Save and Log User Sign Up -----/
+
   newUser.save(
     function(error, user) {
 
-      UserModel.find(
-        function(err, users) {
-          res.json(users);
+    UserModel.findOne(
+      {
+        email: req.body.email,
+        password: req.body.password
+      },
+        function(err, user) {
+          res.json(user);
         }
       )
 
 
     }
   );
-
 });
 
 //-----Add new location-----//
