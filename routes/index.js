@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
+
+/*options defined to wait for server response*/
 var options = {
   server: {
     socketOptions: {
@@ -8,6 +10,8 @@ var options = {
     }
   }
 };
+
+/*mongoose.connect function defines calls to mlab database*/
 mongoose.connect('mongodb://admin:paris02@ds163103.mlab.com:63103/darkskymap',
   options,
   function(err) {
