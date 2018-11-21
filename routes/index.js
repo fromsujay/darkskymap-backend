@@ -68,7 +68,7 @@ var LocationsModel = mongoose.model('locations', locationsSchema);
 //-----Finds existing user-----//
 router.post('/signin', function(req, res, next) {
 
-  UserModel.find({
+  UserModel.findOne({
       email: req.body.email,
       password: req.body.password,
     },
@@ -156,6 +156,58 @@ router.get('/map', function(req, res, next) {
       res.json({locations});
       console.log(locations);
       console.log(err);
+    }
+  )
+
+});
+
+//-----Add location in favorites-----//
+
+router.post('/addfavorite', function(req, res, next) {
+console.log('addfavorite body: ', req.body);
+  UserModel.findOne(
+    { _id: req.body.userId },
+    function(err, user) {
+      res.json({user});
+      console.log();
+      console.log('route addfavorite user: ', user);
+      console.log(err);
+
+      var locationName = req.body.locationName;
+      var latitude = req.body.latitude;
+      var longitude = req.body.longitude;
+      var favoriteCopy = [...user.favorite];
+      favoriteCopy.push({locationName: locationName, latitude: latitude, longitude:longitude})
+      console.log('favoriteCopy: ', favoriteCopy);
+      UserModel.update(
+          { _id: req.body.userId},
+          { favorite:favoriteCopy},
+          function(error, raw) {
+
+          }
+      );
+
+    }
+  )
+
+
+
+});
+
+//-----Display user favorites locations-----//
+
+router.post('/favorites', function(req, res, next){
+
+  UserModel.findOne(
+    { _id: req.body.userId },
+    function(err, user) {
+      var favorites = user.favorite;
+      console.log('user favorite backend: ', user);
+      res.json({favorites});
+      console.log(favorites);
+      console.log(err);
+
+
     }
   )
 
