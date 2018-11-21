@@ -68,11 +68,10 @@ var LocationsModel = mongoose.model('locations', locationsSchema);
 //-----Finds existing user-----//
 router.post('/signin', function(req, res, next) {
 
-  UserModel.find({
+  UserModel.findOne({
       email: req.body.email,
       password: req.body.password,
     },
-
     function(err, users) {
       res.json(users);
     }
