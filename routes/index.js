@@ -111,6 +111,19 @@ router.post('/signup', function(req, res, next) {
 
 //-----Add new location-----//
 router.post('/addlocation', function(req, res, next) {
+  console.log(req.body)
+
+  if (req.body.transparency == 0){
+    req.body.transparency = 'T1'
+  } else if (req.body.transparency == 25){
+    req.body.transparency = 'T2'
+  } else if (req.body.transparency == 50){
+    req.body.transparency = 'T3'
+  } else if (req.body.transparency == 75){
+    req.body.transparency = 'T4'
+  } else if (req.body.transparency == 100){
+    req.body.transparency = 'T5'
+  }
 
   var newLocations = new LocationsModel({
     locationName: req.body.locationName,
