@@ -168,29 +168,63 @@ console.log('addfavorite body: ', req.body);
     { _id: req.body.userId },
     function(err, user) {
       res.json({user});
-      console.log();
-      console.log('route addfavorite user: ', user);
       console.log(err);
 
       var locationName = req.body.locationName;
       var latitude = req.body.latitude;
       var longitude = req.body.longitude;
       var favoriteCopy = [...user.favorite];
-      favoriteCopy.push({locationName: locationName, latitude: latitude, longitude:longitude})
-      console.log('favoriteCopy: ', favoriteCopy);
-      UserModel.update(
-          { _id: req.body.userId},
-          { favorite:favoriteCopy},
-          function(error, raw) {
+      var favoriteExist = false
+for (var i = 0; i < favoriteCopy.length; i++) {
+ if(favoriteCopy[i].locationName === req.body.locationName){
+   favoriteExist = true
+ }
+}
+if (!favoriteExist) {
+  favoriteCopy.push({locationName: locationName, latitude: latitude, longitude:longitude})
+  console.log('favoriteCopy: ', favoriteCopy);
+  UserModel.update(
+      { _id: req.body.userId},
+      { favorite:favoriteCopy},
+      function(error, raw) {
 
-          }
-      );
+      }
+  );
+}
+
 
     }
   )
+});
+
+//-----delete location in favorites-----//
+
+router.post('/deletefavorite', function(req, res, next) {
+
+    UserModel.findOne(
+        { _id: req.body.userId } ,
+
+        function (err, user) {
+            console.log(user);
+
+            favoriteCopy = [...user.favorite];
+            console.log('Favorite copy: ', favoriteCopy);
+            favoriteCopy.splice(favoriteCopy.indexOf(req.body.locationName)-1, 1)
+            console.log('After splice', favoriteCopy);
+
+            UserModel.update(
+                { _id: req.body.userId},
+                { favorite:favoriteCopy},
+                function(error, raw) {
+                  console.log('raw: ', raw);
+                  console.log('Res json user', {user} );
+                  res.json({user})
+                }
+              )
+        }
 
 
-
+)
 });
 
 //-----Display user favorites locations-----//
