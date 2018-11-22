@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var request = require('request');
 var mongoose = require('mongoose');
 
 /*options defined to wait for server response*/
@@ -192,8 +193,6 @@ if (!favoriteExist) {
       }
   );
 }
-
-
     }
   )
 });
@@ -245,6 +244,20 @@ router.post('/favorites', function(req, res, next){
 
     }
   )
+
+});
+
+//-----Get location weather infos-----//
+
+router.post('/getLocationWeatherInfos', function(req, res, next){
+console.log(req.body.latitude);
+console.log(req.body.longitude);
+  request("http://api.openweathermap.org/data/2.5/weather?lat="+req.body.latitude+"&lon="+req.body.longitude+"&appid=6598e8e76e47ddd86b14ff324d146347&units=metric&lang=fr", function(error, reponse, body) {
+    console.log('weather error: ', error);
+    console.log('BO', body);
+    body = JSON.parse(body)
+    res.json(body)
+  })
 
 });
 
