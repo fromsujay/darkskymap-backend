@@ -209,7 +209,7 @@ router.post('/deletefavorite', function(req, res, next) {
 
             favoriteCopy = [...user.favorite];
             console.log('Favorite copy: ', favoriteCopy);
-            favoriteCopy.splice(favoriteCopy.indexOf(req.body.locationName)-1, 1)
+            var deleteLocation = favoriteCopy.splice(favoriteCopy.indexOf(req.body.locationName)-1, 1)
             console.log('After splice', favoriteCopy);
 
             UserModel.update(
@@ -218,7 +218,7 @@ router.post('/deletefavorite', function(req, res, next) {
                 function(error, raw) {
                   console.log('raw: ', raw);
                   console.log('Res json user', {user} );
-                  res.json({user})
+                  res.json({name:req.body.locationName})
                 }
               )
         }
