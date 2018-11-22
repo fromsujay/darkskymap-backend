@@ -235,6 +235,7 @@ router.post('/favorites', function(req, res, next){
   UserModel.findOne(
     { _id: req.body.userId },
     function(err, user) {
+      console.log('favorites user', user);
       var favorites = user.favorite;
       console.log('user favorite backend: ', user);
       res.json({favorites});
