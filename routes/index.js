@@ -73,7 +73,6 @@ router.post('/signin', function(req, res, next) {
       email: req.body.email,
       password: req.body.password,
     },
-
     function(err, users) {
       res.json(users);
     }
@@ -113,6 +112,43 @@ router.post('/signup', function(req, res, next) {
 
 //-----Add new location-----//
 router.post('/addlocation', function(req, res, next) {
+  console.log(req.body)
+
+  if (req.body.transparency == 0){
+    req.body.transparency = 'T1'
+  } else if (req.body.transparency == 25){
+    req.body.transparency = 'T2'
+  } else if (req.body.transparency == 50){
+    req.body.transparency = 'T3'
+  } else if (req.body.transparency == 75){
+    req.body.transparency = 'T4'
+  } else if (req.body.transparency == 100){
+    req.body.transparency = 'T5'
+  }
+
+  if (req.body.lightPollution == 0){
+    req.body.lightPollution = 'P1'
+  } else if (req.body.lightPollution == 25){
+    req.body.lightPollution = 'P2'
+  } else if (req.body.lightPollution == 50){
+    req.body.lightPollution = 'P3'
+  } else if (req.body.lightPollution == 75){
+    req.body.lightPollution = 'P4'
+  } else if (req.body.lightPollution == 100){
+    req.body.lightPollution = 'P5'
+  }
+
+  if (req.body.seeing == 0){
+    req.body.seeing = 'S1'
+  } else if (req.body.seeing == 25){
+    req.body.seeing = 'S2'
+  } else if (req.body.seeing == 50){
+    req.body.seeing = 'S3'
+  } else if (req.body.seeing == 75){
+    req.body.seeing = 'S4'
+  } else if (req.body.seeing == 100){
+    req.body.seeing = 'S5'
+  }
 
   var newLocations = new LocationsModel({
     locationName: req.body.locationName,
