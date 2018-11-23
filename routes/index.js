@@ -201,33 +201,40 @@ router.get('/map', function(req, res, next) {
 //-----Add location in favorites-----//
 
 router.post('/addfavorite', function(req, res, next) {
-console.log('addfavorite body: ', req.body);
   UserModel.findOne(
     { _id: req.body.userId },
     function(err, user) {
-      res.json({user});
       console.log(err);
-
       var locationName = req.body.locationName;
       var latitude = req.body.latitude;
       var longitude = req.body.longitude;
-      var favoriteCopy = [...user.favorite];
       var favoriteExist = false
-for (var i = 0; i < favoriteCopy.length; i++) {
- if(favoriteCopy[i].locationName === req.body.locationName){
-   favoriteExist = true
- }
-}
+    for (var i = 0; i < user.favorite.length; i++) {
+     if(user.favorite[i].locationName === req.body.locationName){
+       favoriteExist = true
+     }
+    }
 if (!favoriteExist) {
-  favoriteCopy.push({locationName: locationName, latitude: latitude, longitude:longitude})
-  console.log('favoriteCopy: ', favoriteCopy);
+var favoriteCopy = user.favorite
+  favoriteCopy.push(
+    {locationName: locationName, latitude: latitude, longitude:longitude}
+  )
+
   UserModel.update(
       { _id: req.body.userId},
-      { favorite:favoriteCopy},
-      function(error, raw) {
-
+      {favorite: favoriteCopy},
+      function(error, allCity) {
+      UserModel.find(
+        { _id: req.body.userId},
+        function(err, city) {
+          res.json({city});
+        }
+      )
       }
   );
+
+}else{
+  res.json({user});
 }
     }
   )
@@ -271,10 +278,7 @@ router.post('/favorites', function(req, res, next){
     { _id: req.body.userId },
     function(err, user) {
       var favorites = user.favorite;
-      console.log('user favorite backend: ', user);
       res.json({favorites});
-      console.log(favorites);
-      console.log(err);
 
 
     }
@@ -293,8 +297,10 @@ console.log(req.body.longitude);
     body = JSON.parse(body)
     res.json(body)
   })
+  });
 
-});
+
+
 
 //-----Get Moon datas-----//
 
