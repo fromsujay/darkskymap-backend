@@ -296,4 +296,16 @@ console.log(req.body.longitude);
 
 });
 
+//-----Get Moon datas-----//
+
+router.post('/getMoonDatas', function(req, res, next){
+  request("http://api.farmsense.net/v1/moonphases/?d=" + req.body.unixTimeStamp, function(error, reponse, body) {
+    console.log('weather error: ', error);
+    console.log('BO', body);
+    body = JSON.parse(body)
+    res.json(body)
+  })
+
+})
+
 module.exports = router;
