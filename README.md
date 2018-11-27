@@ -10,7 +10,7 @@ Duration : 2 weeks
 Objective : Build a tool for anyone interested in observing the night sky to find the best places for observing the night sky. 
 
 
-Backend End technologies/toos used : Node, Javascript, Express, Mongoose, Mlab & MongoDB. 
+Backend End technologies/tools used : Node, Javascript, Express, Mongoose, Mlab & MongoDB. 
 
 
 For the front end code of the project please refer to https://github.com/fromsujay/darkskymap. 
